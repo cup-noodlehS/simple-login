@@ -3,18 +3,32 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useDebouncedCallback } from "use-debounce";
+import { useRouter } from "next/navigation";
 
 function page() {
+  const router = useRouter();
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(null);
+  const [emailError, setEmailError] = useState(false);
 
   const checkPasswordMatch = useDebouncedCallback(() => {
     setPasswordMatch(password === confirmPassword);
   }, 500);
 
-  const disableNext = !email || !password || !confirmPassword || !passwordMatch;
+  const checkEmails = useDebouncedCallback(() => {
+    if (!users) {
+      setEmailError(false);
+      return;
+    }
+    setEmailError(users.some((user) => user.email === email));
+  }, 500);
+
+  const disableNext =
+    !email || !password || !confirmPassword || !passwordMatch || emailError;
 
   useEffect(() => {
     if (!password || !confirmPassword) return;
@@ -23,12 +37,33 @@ function page() {
     }
   }, [password, confirmPassword]);
 
+  useEffect(() => {
+    if (!email) return;
+    checkEmails();
+  }, [email]);
+
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [country, setCountry] = useState("");
 
-  const [state, setState] = useState(1);
+  const disableRegister = !userName || !firstName || !lastName || !country;
+
+  const [state, setState] = useState(0);
+
+  const handleRegister = () => {
+    const newUser = {
+      email,
+      password,
+      userName,
+      firstName,
+      lastName,
+      country,
+    };
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    router.push("/");
+  };
 
   return (
     <div className="w-screen min-h-lvh overflow-x-hidden flex justify-center items-center p-3">
@@ -57,6 +92,9 @@ function page() {
                 placeholder="Email"
               />
             </label>
+            {emailError && (
+              <p className="text-red-500 text-sm">Email is already taken</p>
+            )}
             <label className={`input input-bordered flex items-center gap-2`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -114,6 +152,7 @@ function page() {
             <label className="input input-bordered flex items-center gap-2">
               Username
               <input
+                value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 type="text"
                 className="grow"
@@ -123,6 +162,7 @@ function page() {
             <label className="input input-bordered flex items-center gap-2">
               First Name
               <input
+                value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 type="text"
                 className="grow"
@@ -132,6 +172,7 @@ function page() {
             <label className="input input-bordered flex items-center gap-2">
               Last Name
               <input
+                value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 type="text"
                 className="grow"
@@ -141,6 +182,7 @@ function page() {
             <label className="input input-bordered flex items-center gap-2">
               Country
               <input
+                value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 type="text"
                 className="grow"
@@ -169,7 +211,13 @@ function page() {
             >
               back
             </button>
-            <button className="grow btn btn-neutral">Register</button>
+            <button
+              onClick={handleRegister}
+              disabled={disableRegister}
+              className="grow btn btn-neutral"
+            >
+              Register
+            </button>
           </div>
         )}
         <div className="flex items-center justify-end">
