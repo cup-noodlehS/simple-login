@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <div className="w-screen min-h-lvh overflow-x-hidden flex justify-center items-center p-3">
       <div className="max-w-[400px] rounded-md shadow-md border p-5 flex flex-col gap-3 items-center">
-        <Image src="next.svg" alt="logo" width={100} height={100} />
+        {/* <Image src="next.svg" alt="logo" width={100} height={100} /> */}
         <h1 className="text-2xl font-bold mt-3">Welcome back to Dashboard!</h1>
         <div className="w-full flex flex-col gap-3">
           <label
-            class={`input input-bordered flex items-center gap-2 ${
+            className={`input input-bordered flex items-center gap-2 ${
               errorMsg ? "input-error" : ""
             }`}
           >
@@ -22,15 +22,15 @@ export default function Home() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="w-4 h-4 opacity-70"
+              className="w-4 h-4 opacity-70"
             >
               <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
-            <input type="text" class="grow" placeholder="Email" />
+            <input type="text" className="grow" placeholder="Email" />
           </label>
           <label
-            class={`input input-bordered flex items-center gap-2 ${
+            className={`input input-bordered flex items-center gap-2 ${
               errorMsg ? "input-error" : ""
             }`}
           >
@@ -38,7 +38,7 @@ export default function Home() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="w-4 h-4 opacity-70"
+              className="w-4 h-4 opacity-70"
             >
               <path
                 fill-rule="evenodd"
@@ -46,7 +46,7 @@ export default function Home() {
                 clip-rule="evenodd"
               />
             </svg>
-            <input type="password" class="grow" placeholder="password" />
+            <input type="password" className="grow" placeholder="password" />
           </label>
           {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
         </div>
