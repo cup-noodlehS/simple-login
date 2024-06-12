@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function Navbar() {
+  const pathname = usePathname();
   const router = useRouter();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("loggedInUser")));
     console.log("rerendered");
-  }, []);
+  }, [pathname]);
 
   const logout = () => {
     localStorage.removeItem("loggedInUser");
