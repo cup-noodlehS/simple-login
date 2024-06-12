@@ -1,14 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [errorMsg, setErrorMsg] = useState("");
+
   return (
-    <div className="w-screen min-h-lvh overflow-x-hidden flex justify-center items-center padding-3">
+    <div className="w-screen min-h-lvh overflow-x-hidden flex justify-center items-center p-3">
       <div className="max-w-[400px] rounded-md shadow-md border p-5 flex flex-col gap-3 items-center">
         <Image src="next.svg" alt="logo" width={100} height={100} />
         <h1 className="text-2xl font-bold mt-3">Welcome back to Dashboard!</h1>
         <div className="w-full flex flex-col gap-3">
-          <label class="input input-bordered flex items-center gap-2">
+          <label
+            class={`input input-bordered flex items-center gap-2 ${
+              errorMsg ? "input-error" : ""
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -20,7 +29,11 @@ export default function Home() {
             </svg>
             <input type="text" class="grow" placeholder="Email" />
           </label>
-          <label class="input input-bordered flex items-center gap-2">
+          <label
+            class={`input input-bordered flex items-center gap-2 ${
+              errorMsg ? "input-error" : ""
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -33,8 +46,9 @@ export default function Home() {
                 clip-rule="evenodd"
               />
             </svg>
-            <input type="password" class="grow" value="password" />
+            <input type="password" class="grow" placeholder="password" />
           </label>
+          {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
         </div>
         <button className="w-full btn btn-neutral">Login</button>
         <div className="flex items-center justify-end">
