@@ -85,7 +85,7 @@ function page() {
               </svg>
               <input
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setEmail(e.target.value.trim().toLowerCase());
                 }}
                 type="text"
                 className="grow"
@@ -153,7 +153,7 @@ function page() {
               Username
               <input
                 value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={(e) => setUserName(e.target.value.trim())}
                 type="text"
                 className="grow"
                 placeholder="Daisy20"
@@ -163,7 +163,7 @@ function page() {
               First Name
               <input
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value.trim())}
                 type="text"
                 className="grow"
                 placeholder="Daisy"
@@ -173,7 +173,7 @@ function page() {
               Last Name
               <input
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value.trim())}
                 type="text"
                 className="grow"
                 placeholder="Ms"
@@ -183,7 +183,7 @@ function page() {
               Country
               <input
                 value={country}
-                onChange={(e) => setCountry(e.target.value)}
+                onChange={(e) => setCountry(e.target.value.trim())}
                 type="text"
                 className="grow"
                 placeholder="US"
